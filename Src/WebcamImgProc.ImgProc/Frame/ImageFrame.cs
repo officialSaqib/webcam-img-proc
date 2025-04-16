@@ -123,12 +123,12 @@ namespace WebcamImgProc.ImgProc.Frame
             // nothing, and otherwise throw an exception.
             //
             // This does not affect the _frame field AT ALL of this class
-            if (_colorSpace == ColorSpace.BGR)
+            if (this._colorSpace == ColorSpace.BGR)
             {
                 frame = this._frame.Clone();
                 CvInvoke.CvtColor(frame, frame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
             }
-            else if (_colorSpace != ColorSpace.GRAY)
+            else if (this._colorSpace != ColorSpace.GRAY)
             {
                 throw new Exception("ERROR: frame expected to be BGR or already greyscale");
             }
