@@ -17,11 +17,11 @@ bool outputCannyEdgeDetection = false;
 //
 // Filter Settings
 //
-int kSizeX = 5;                          // Gaussian Blur
-int kSizeY = 5;                          // Gaussian Blur
-double sigmaX = 0;                       // Gaussian Blur
-double thresholdLower = 100;             // Canny Edge Detection
-double thresholdUpper = 200;             // Canny Edge Detection
+int kSizeX = 5;              // Gaussian Blur
+int kSizeY = 5;              // Gaussian Blur
+double sigmaX = 0;           // Gaussian Blur
+double thresholdLower = 100; // Canny Edge Detection
+double thresholdUpper = 200; // Canny Edge Detection
 
 ///////////////////////////////////////////////////////////////////////////////
 //
