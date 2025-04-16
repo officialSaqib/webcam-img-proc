@@ -1,0 +1,27 @@
+﻿<Window x:Class="WebcamImgProc.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WebcamImgProc.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="512" Width="1024
+        ">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Webcam Image" Grid.Row="0"/>
+            <ComboBox HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="246" Text="Default" Height="22"/>
+            <CheckBox Content="Pause Frame" HorizontalAlignment="Left" Margin="270,12,0,0" Grid.Row="1" VerticalAlignment="Top" Height="15" Width="87"/>
+        </Grid>
+        <GroupBox Grid.Column="1" Header="Greyscale Histogram"/>
+
+    </Grid>
+</Window>
