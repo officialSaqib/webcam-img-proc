@@ -18,8 +18,8 @@
         /// </summary>
         GAUSSIAN_BLUR = 2,
         /// <summary>
-        /// Basic edge-detection is applied to the frame.
+        /// Canny Edge Detection is applied to the frame.
         /// </summary>
-        EDGE_DETECTION_BASIC = 3,
+        CANNY_EDGE_DETECTION = 3,
     }
 }
