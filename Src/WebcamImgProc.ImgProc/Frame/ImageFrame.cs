@@ -22,6 +22,11 @@ namespace WebcamImgProc.ImgProc.Frame
         private const int GREYSCALE_BIN_COUNT = 256;
 
         /// <summary>
+        /// Backup of the internal frame originally used to represent frame
+        /// upon initialization by constructor.
+        /// </summary>
+        private readonly Mat _originalFrame;
+        /// <summary>
         /// Internal representation of our frame (abstracted away from public).
         /// </summary>
         private Mat _frame;
@@ -38,7 +43,8 @@ namespace WebcamImgProc.ImgProc.Frame
         /// <param name="frame">Frame to <b>copy</b> contents of.</param>
         public ImageFrame(ImageFrame frame)
         {
-            _frame = frame._frame.Clone();
+            this._originalFrame = frame._frame.Clone();
+            this._frame = frame._frame.Clone();
         }
 
         /// <summary>
@@ -47,15 +53,8 @@ namespace WebcamImgProc.ImgProc.Frame
         /// <param name="frame">Image material to use for internal processing.</param>
         public ImageFrame(Mat frame)
         {
-            _frame = frame;
-        }
-
-        /// <summary>
-        /// Applies a greyscale filter onto the internal <see cref="_frame"/>.
-        /// </summary>
-        private void ApplyFilterGreyscale()
-        {
-            CvInvoke.CvtColor(_frame, _frame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+            this._originalFrame = frame.Clone();
+            this._frame = frame;
         }
 
         /// <summary>
@@ -64,15 +63,23 @@ namespace WebcamImgProc.ImgProc.Frame
         /// <returns>A bitmap representation of the current frame.</returns>
         public Bitmap GetBitmap()
         {
-            return _frame.ToBitmap();
+            return this._frame.ToBitmap();
+        }
+
+        /// <summary>
+        /// Sets the frame back to what it was upon creation.
+        /// </summary>
+        public void Reset()
+        {
+            this._frame = this._originalFrame.Clone();
+            this._colorSpace = ColorSpace.BGR;
         }
 
         /// <summary>
         /// Applies the desired filter onto the frame.
         /// </summary>
         /// <remarks>
-        /// NOTE: It is vital to understand that, once called, the method
-        /// cannot be undone. Make backups as needed.
+        /// NOTE: See <see cref="Reset"/> for how to undo this method.
         /// </remarks>
         /// <param name="type">The type of filter to apply.</param>
         /// <exception cref="Exception">Invalid passing of non-processable filter type.</exception>
@@ -84,7 +91,7 @@ namespace WebcamImgProc.ImgProc.Frame
                     break;
                 case FilterType.GREYSCALE:
                     ApplyFilterGreyscale();
-                    _colorSpace = ColorSpace.GRAY;
+                    this._colorSpace = ColorSpace.GRAY;
                     break;
                 default:
                     throw new Exception($"ERROR: filter type {type} has no handling.");
@@ -109,7 +116,7 @@ namespace WebcamImgProc.ImgProc.Frame
             // Reference for what frame to use, useful in the case where we
             // need to do a greyscale conversion first (that way we can clone
             // data into this variable IF NEEDED)
-            Mat frame = _frame;
+            Mat frame = this._frame;
 
             // If we aren't working with a greyscale image, clone its contents
             // and make it greyscale. If the image is already in greyscale do
@@ -118,7 +125,7 @@ namespace WebcamImgProc.ImgProc.Frame
             // This does not affect the _frame field AT ALL of this class
             if (_colorSpace == ColorSpace.BGR)
             {
-                frame = _frame.Clone();
+                frame = this._frame.Clone();
                 CvInvoke.CvtColor(frame, frame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
             }
             else if (_colorSpace != ColorSpace.GRAY)
@@ -150,6 +157,14 @@ namespace WebcamImgProc.ImgProc.Frame
             var clone = new Bitmap(bmp);
 
             return clone;
+        }
+
+        /// <summary>
+        /// Applies a greyscale filter onto the internal <see cref="_frame"/>.
+        /// </summary>
+        private void ApplyFilterGreyscale()
+        {
+            CvInvoke.CvtColor(this._frame, this._frame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
         }
     }
 }
