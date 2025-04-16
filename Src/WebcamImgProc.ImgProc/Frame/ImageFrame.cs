@@ -243,9 +243,15 @@ namespace WebcamImgProc.ImgProc.Frame
         /// Applies Canny Edge Detection onto the internal <see cref="_frame"/>
         /// with given threshold.
         /// </summary>
+        /// <remarks>
+        /// Although 
+        /// </remarks>
         /// <param name="threshold">Starting/ending threshold for edge-strength detection.</param>
         private void ApplyCannyEdgeDetection((double, double) threshold)
         {
+            // Greyscale needs to be applied first to make it an 8-bit image
+            this.ApplyFilterGreyscale();
+
             // Canny() function does not like input equalling output, so we
             // make a temporary frame to hold the output
             var newFrame = new Mat();
