@@ -9,6 +9,13 @@ namespace WebcamImgProc.ImgProc.Capture
     public class Webcam
     {
         /// <summary>
+        /// Captures a single frame from the webcam without occupying webcam
+        /// feed.
+        /// </summary>
+        /// <param name="camIndex">Specific camera to use, 0 is the first camera, etc.</param>
+        public static ImageFrame CaptureFrame(int camIndex = 0) => new Webcam(camIndex).GrabFrame();
+
+        /// <summary>
         /// Main internal capture interface used to interact with the webcam.
         /// </summary>
         private VideoCapture _capture = default!;
