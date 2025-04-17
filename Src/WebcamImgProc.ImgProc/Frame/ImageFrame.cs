@@ -95,11 +95,10 @@ namespace WebcamImgProc.ImgProc.Frame
                     break;
                 case FilterType.GAUSSIAN_BLUR:
                     ApplyFilterGuassianBlur(settings.KernelSize, settings.SigmaX);
-                    this._colorSpace = ColorSpace.BGR;
                     break;
                 case FilterType.CANNY_EDGE_DETECTION:
                     ApplyCannyEdgeDetection(settings.Threshold);
-                    this._colorSpace = ColorSpace.OTHER;
+                    this._colorSpace = ColorSpace.GRAY;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException($"ERROR: filter type {type} has no handling.");
@@ -249,8 +248,11 @@ namespace WebcamImgProc.ImgProc.Frame
         /// <param name="threshold">Starting/ending threshold for edge-strength detection.</param>
         private void ApplyCannyEdgeDetection((double, double) threshold)
         {
-            // Greyscale needs to be applied first to make it an 8-bit image
-            this.ApplyFilterGreyscale();
+            if (this._colorSpace != ColorSpace.GRAY)
+            {
+                // Greyscale needs to be applied first to make it an 8-bit image
+                this.ApplyFilterGreyscale();
+            }
 
             // Canny() function does not like input equalling output, so we
             // make a temporary frame to hold the output
