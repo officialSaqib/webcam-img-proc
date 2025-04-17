@@ -1,5 +1,7 @@
-﻿using Mono.Options;
+﻿using Emgu.CV;
+using Mono.Options;
 using WebcamImgProc.CLI;
+using WebcamImgProc.CLI.Testing;
 using WebcamImgProc.ImgProc.Capture;
 using WebcamImgProc.ImgProc.Frame;
 
@@ -8,10 +10,13 @@ using WebcamImgProc.ImgProc.Frame;
 // Argument Flags
 //
 bool showHelp = false;
+bool doTesting = false;
+string input = string.Empty;
 bool outputGreyscale = false;
 bool outputGreyscaleHistogram = false;
 bool outputGaussianBlur = false;
 bool outputCannyEdgeDetection = false;
+bool outputAll = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -30,6 +35,8 @@ double thresholdUpper = 200; // Canny Edge Detection
 var options = new OptionSet
 {
     { "h|help", "show this message then exit", arg => showHelp = true },
+    { "t|integration-e2e-test", "performs integration/end-to-end tests on processing library", arg => doTesting = true },
+    { "i|in=", "as opposed to webcam, reads from custom image input (BMP, JPG, PNG, etc.)", arg => input = arg },
     { "g|grey", "output greyscale image", arg => outputGreyscale = true },
     { "histogram", "output greyscale histogram", arg => outputGreyscaleHistogram = true },
     { "b|blur", "output image with Gaussian Blur", arg => outputGaussianBlur = true },
@@ -39,6 +46,7 @@ var options = new OptionSet
     { "e|edgedetection", "output image with Canny Edge Detection", arg => outputCannyEdgeDetection = true },
     { "threshold-l=", "lower threshold for Canny Edge Detection (default=100.0)", arg => thresholdLower = double.Parse(arg) },
     { "threshold-u=", "upper threshold for Canny Edge Detection (default=200.0)", arg => thresholdUpper = double.Parse(arg) },
+    { "a|all", "output all image filter types", arg => outputAll = true },
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -67,10 +75,43 @@ if (showHelp)
 
 ///////////////////////////////////////////////////////////////////////////////
 //
+// Argument Processing : -(-i)ntegration-e2e-test
+//
+if (doTesting)
+{
+    Testing.Run();
+    return;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
 // Default (No/Many Arguments)
 //
-ImageFrame frame = Webcam.CaptureFrame();
-frame.GetBitmap().Save("webcam.png");
+ImageFrame frame;
+string saveName;
+if (string.IsNullOrEmpty(input))
+{
+    frame = Webcam.CaptureFrame();
+    saveName = "webcam";
+}
+else
+{
+    frame = new ImageFrame(CvInvoke.Imread(input));
+    saveName = Path.GetFileNameWithoutExtension(input);
+}
+frame.GetBitmap().Save(saveName + ".png");
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Argument Processing: -(-a)ll
+//
+if (outputAll)
+{
+    outputGreyscale = true;
+    outputGreyscaleHistogram = true;
+    outputGaussianBlur = true;
+    outputCannyEdgeDetection = true;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -79,7 +120,7 @@ frame.GetBitmap().Save("webcam.png");
 if (outputGreyscale)
 {
     frame.ApplyFilter(FilterType.GREYSCALE);
-    frame.GetBitmap().Save("webcam_greyscale.png");
+    frame.GetBitmap().Save(saveName + "_greyscale.png");
     frame.Reset();
 }
 
@@ -89,7 +130,7 @@ if (outputGreyscale)
 //
 if (outputGreyscaleHistogram)
 {
-    frame.GenerateGreyscaleHistogram().Save("webcam_greyscale_histogram.png");
+    frame.GenerateGreyscaleHistogram().Save(saveName + "_greyscale_histogram.png");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -99,7 +140,7 @@ if (outputGreyscaleHistogram)
 if (outputGaussianBlur)
 {
     frame.ApplyFilter(FilterType.GAUSSIAN_BLUR, (kSizeX, kSizeY), sigmaX);
-    frame.GetBitmap().Save("webcam_gaussian_blur.png");
+    frame.GetBitmap().Save(saveName + "_gaussian_blur.png");
     frame.Reset();
 }
 
@@ -110,6 +151,6 @@ if (outputGaussianBlur)
 if (outputCannyEdgeDetection)
 {
     frame.ApplyFilter(FilterType.CANNY_EDGE_DETECTION, (thresholdLower, thresholdUpper));
-    frame.GetBitmap().Save("webcam_canny_edge_detection.png");
+    frame.GetBitmap().Save(saveName + "_canny_edge_detection.png");
     frame.Reset();
 }
