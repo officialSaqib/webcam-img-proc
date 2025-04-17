@@ -30,6 +30,12 @@ namespace WebcamImgProc.ImgProc.Capture
         /// <param name="camIndex">Specific camera to use, 0 is the first camera, etc.</param>
         public static ImageFrame CaptureFrame(int camIndex = 0)
         {
+            // Checks if camera already has instance of Webcam object
+            if (_cameraIndices.TryGetValue(camIndex, out _))
+            {
+                throw new ArgumentException("ERROR: camera already in use by another instance.");
+            }
+
             using var webcam = new Webcam(camIndex);
             return webcam.GrabFrame();
         }
