@@ -32,7 +32,7 @@ namespace WebcamImgProc.UI
 
             // A timer that ticks once per nanosecond, updates the view
             var dispatchTimer = new DispatcherTimer();
-            dispatchTimer.Tick += new EventHandler(TimerTickEvent);
+            dispatchTimer.Tick += new EventHandler(FrameUpdateTickEvent);
             dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
             dispatchTimer.Start();
 
@@ -47,7 +47,7 @@ namespace WebcamImgProc.UI
             this.ThresholdUpperSlider.Minimum = 1;
         }
 
-        private void TimerTickEvent(object sender, EventArgs e)
+        private void FrameUpdateTickEvent(object sender, EventArgs e)
         {
             if (this.PauseFrameCheckBox.IsChecked == true)
                 return;
@@ -67,7 +67,7 @@ namespace WebcamImgProc.UI
 
                 case 3:
                     fr.ApplyFilter(FilterType.CANNY_EDGE_DETECTION,
-                        (this.ThresholdLowerSlider.Value, this.ThresholdUpperSlider.Value));
+                        (this.ThresholdLowerSlider.Value*10, this.ThresholdUpperSlider.Value*10));
                     break;
 
                 default:

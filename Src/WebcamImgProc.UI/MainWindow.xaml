@@ -41,15 +41,15 @@
 
             <Label Content="Sigma (X):" HorizontalAlignment="Left" Margin="221,44,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.794,0.809"/>
             <Slider x:Name="SigmaXSlider" HorizontalAlignment="Left" Margin="287,50,0,0" Grid.Row="1" VerticalAlignment="Top" Width="196" ScrollViewer.VerticalScrollBarVisibility="Disabled" Ticks="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20" TickPlacement="BottomRight" IsSnapToTickEnabled="True" ValueChanged="SigmaXSlider_ValueChanged" Maximum="20"/>
-            <Label x:Name="SigmaXValueLabel" Content="(1)" HorizontalAlignment="Left" Margin="485,44,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <Label x:Name="SigmaXValueLabel" Content="(1)" HorizontalAlignment="Left" Margin="484,44,0,0" Grid.Row="1" VerticalAlignment="Top"/>
 
             <Label Content="Threshold (Lower):" HorizontalAlignment="Left" Margin="4,98,0,0" Grid.Row="1" VerticalAlignment="Top"/>
             <Slider x:Name="ThresholdUpperSlider" HorizontalAlignment="Left" Margin="117,129,0,0" Grid.Row="1" VerticalAlignment="Top" Width="368" ScrollViewer.VerticalScrollBarVisibility="Disabled" Ticks="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="20" ValueChanged="ThresholdUpperSlider_ValueChanged"/>
-            <Label x:Name="ThresholdUpperValueLabel" Content="(10)" HorizontalAlignment="Left" Margin="481,123,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <Label x:Name="ThresholdUpperValueLabel" Content="(10)" HorizontalAlignment="Left" Margin="480,123,0,0" Grid.Row="1" VerticalAlignment="Top"/>
 
             <Label Content="Threshold (Upper):" HorizontalAlignment="Left" Margin="5,124,0,0" Grid.Row="1" VerticalAlignment="Top"/>
             <Slider x:Name="ThresholdLowerSlider" HorizontalAlignment="Left" Margin="117,104,0,0" Grid.Row="1" VerticalAlignment="Top" Width="368" ScrollViewer.VerticalScrollBarVisibility="Disabled" Ticks="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="20" ValueChanged="ThresholdLowerSlider_ValueChanged"/>
-            <Label x:Name="ThresholdLowerValueLabel" Content="(10)" HorizontalAlignment="Left" Margin="481,98,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <Label x:Name="ThresholdLowerValueLabel" Content="(10)" HorizontalAlignment="Left" Margin="480,98,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         </Grid>
 
         <GroupBox Grid.Column="1" Header="Greyscale Histogram" Grid.ColumnSpan="2">
