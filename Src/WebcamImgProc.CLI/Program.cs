@@ -107,7 +107,7 @@ if (outputAll)
 if (outputGreyscale)
 {
     frame.ApplyFilter(FilterType.GREYSCALE);
-    frame.GetBitmap().Save(saveName + "_greyscale.png");
+    frame.GetBitmap().Save($"{saveName}_greyscale.png");
     frame.Reset();
 }
 
@@ -117,7 +117,7 @@ if (outputGreyscale)
 //
 if (outputGreyscaleHistogram)
 {
-    frame.GenerateGreyscaleHistogram().Save(saveName + "_greyscale_histogram.png");
+    frame.GenerateGreyscaleHistogram().Save($"{saveName}_greyscale_histogram.png");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -127,7 +127,7 @@ if (outputGreyscaleHistogram)
 if (outputGaussianBlur)
 {
     frame.ApplyFilter(FilterType.GAUSSIAN_BLUR, (kSizeX, kSizeY), sigmaX);
-    frame.GetBitmap().Save(saveName + "_gaussian_blur.png");
+    frame.GetBitmap().Save($"{saveName}_gaussian_blur_{kSizeX}x{kSizeY}_{sigmaX}.png");
     frame.Reset();
 }
 
@@ -138,6 +138,6 @@ if (outputGaussianBlur)
 if (outputCannyEdgeDetection)
 {
     frame.ApplyFilter(FilterType.CANNY_EDGE_DETECTION, (thresholdLower, thresholdUpper));
-    frame.GetBitmap().Save(saveName + "_canny_edge_detection.png");
+    frame.GetBitmap().Save($"{saveName}_canny_edge_detection_{thresholdLower}_{thresholdUpper}.png");
     frame.Reset();
 }
