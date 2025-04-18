@@ -204,6 +204,11 @@ namespace WebcamImgProc.ImgProc.Frame
             for (int i = 0; i < ImageFrame.GREYSCALE_BIN_COUNT; i++)
                 plot.Add.Bar(i, binValues[i, 0]);
 
+            // Setting plot labels
+            plot.Title("Greyscale Histogram");
+            plot.YLabel("Pixel Count");
+            plot.XLabel("Bin (Pixel Value)");
+
             // Plot as a rendered Bitmap image (bytes)
             byte[] plotBytes = plot.GetImage(512, 512).GetImageBytes(ImageFormat.Bmp);
 
