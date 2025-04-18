@@ -30,10 +30,13 @@ namespace WebcamImgProc.UI
         {
             InitializeComponent();
 
+            // Default selection for filter
+            this.FilterTypeComboBox.SelectedIndex = 0;
+
             // A timer that ticks once per nanosecond, updates the view
             var dispatchTimer = new DispatcherTimer();
             dispatchTimer.Tick += new EventHandler(FrameUpdateTickEvent);
-            dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 5);
             dispatchTimer.Start();
 
             // WPF sliders have a bug (I think?) where it calls the event if I
@@ -77,6 +80,32 @@ namespace WebcamImgProc.UI
             // Setting source for each WPF image
             this.WebcamFrameImage.Source = Helpers.Convert(fr.GetBitmap());
             this.WebcamFrameImageGreyscale.Source = Helpers.Convert(fr.GenerateGreyscaleHistogram());
+        }
+
+        private void FilterTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.KernelXSlider.IsEnabled = false;
+            this.KernelYSlider.IsEnabled = false;
+            this.SigmaXSlider.IsEnabled = false;
+            this.ThresholdLowerSlider.IsEnabled = false;
+            this.ThresholdUpperSlider.IsEnabled = false;
+
+            switch (this.FilterTypeComboBox.SelectedIndex)
+            {
+                case 2:
+                    this.KernelXSlider.IsEnabled = true;
+                    this.KernelYSlider.IsEnabled = true;
+                    this.SigmaXSlider.IsEnabled = true;
+                    break;
+
+                case 3:
+                    this.ThresholdLowerSlider.IsEnabled = true;
+                    this.ThresholdUpperSlider.IsEnabled = true;
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void KernelXSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
