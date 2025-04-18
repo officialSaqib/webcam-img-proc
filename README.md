@@ -14,6 +14,7 @@ A C# webcam image processing tool/library using EmguCV that can be used to captu
   * Gaussian Blur
   * Canny Edge Detection
 * Generate and render greyscale histogram for analysis.
+* Live webcam feed for filtering/settings.
 
 ## Installation
 
@@ -40,13 +41,21 @@ _If you aren't using Visual Studio, see [.NET CLI](https://learn.microsoft.com/e
 
 ## Running
 
+### Command-Line
+
 1. Ensure you have [built](##Building) the project.
 2. Go to `WebcamImgProc.CLI\bin\Debug\net8.0-windows\`, find `WebcamImgProc.CLI.exe`.
 3. Run `WebcamImgProc.CLI.exe --help` or see [usage section](##Usage) on how to use the tool.
 
+### Desktop (WPF)
+
+1. Ensure you have [built](##Building) the project.
+2. Go to `WebcamImgProc.UI\bin\Debug\net8.0-windows\`, find `WebcamImgProc.UI.exe`.
+3. Launch `WebcamImgProc.UI.exe`
+
 ## Usage
 
-### Command-Line Tool (Default)
+### Command-Line
 
 | Argument                 | Behavior                                                                                                                                |
 |--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
@@ -56,9 +65,15 @@ _If you aren't using Visual Studio, see [.NET CLI](https://learn.microsoft.com/e
 
 _Run tool with `--help` argument to see image filter options/settings. All image filter outputs will be in the same directory as the executable but suffixed by the filter type._
 
+### Desktop (WPF)
+
+The Desktop-UI is fairly straightforward, on the left is the webcam image and on the right a greyscale histogram of that image. Below the webcam image you can change the filter being applied to the webcam image, pause the image, and modify appropriate settings for the filter.
+
+![WebcamImgProc_UI_Example](https://github.com/user-attachments/assets/f46acb8a-aefb-498f-8975-e98b2f71d40b)
+
 ## Testing
 
-There are classes of unit tests available in `WebcamImgProc.ImgProc.Tests` unit-testing project. This requires [xUnit](https://www.nuget.org/packages/xunit) to run the tests. Test classes/functions have comment summaries explaining testing logic.
+There are classes of unit tests available in `WebcamImgProc.ImgProc.Tests` unit-testing project. This requires [xUnit](https://www.nuget.org/packages/xunit) to run the tests. Test classes/functions have comment summaries explaining testing logic. There are no integration/E2E tests.
 
 ## FAQ
 
@@ -68,6 +83,7 @@ Yes, there were assumptions made:
 * EmguCV, and more precisely OpenCV, function properly with working internals.
 * Results of EmguCV are accurate (i.e. Histogram Calculation, Gaussian Blur Filtering, etc.)
 * EmguCV throws exceptions for unhandlable parameters.
+* UI application works as-expected (minimal testing here, as this was done at the end).
 
 ### What was the thought process for project structure?
 
@@ -78,13 +94,13 @@ It only made sense to put this abstraction into its own project library which ca
 ### Are there features you wish you could've implemented, or didn't have time to implement?
 
 Yes, there are features like this:
-* Working WPF MVVM application.
 * Useful integration/e2e testing for the images processed.
-* Live webcam capture with live filter applications and dynamically adjustable filter settings (I was particularly excited to give this a shot, but prioritized a working implementation first).
+* UI that used MVVM pattern.
+* Better-designed UI
 
-### I see there is a UI project, what is the status of this?
+### How would you have tested the image capture/processing functionalities?
 
-It is incomplete, it was made as a template before the image processing library was implemented.
+I would create custom sample images that follow a pattern of input we generally expect to see (i.e. a person in front of a white background). Then manually verify the correctness of these images, and integrate them into a test that simply feeds these images back to the tool and checks that they match the manually-verified results. It may not be as simple as checking each byte of the result is _exactly_ the same, it might involve some margin of error.
 
 ## License
 
