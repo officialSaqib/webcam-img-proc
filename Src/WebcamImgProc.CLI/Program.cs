@@ -9,7 +9,6 @@ using WebcamImgProc.ImgProc.Frame;
 // Argument Flags
 //
 bool showHelp = false;
-bool doTesting = false;
 string input = string.Empty;
 bool outputGreyscale = false;
 bool outputGreyscaleHistogram = false;
@@ -34,7 +33,6 @@ double thresholdUpper = 200; // Canny Edge Detection
 var options = new OptionSet
 {
     { "h|help", "show this message then exit", arg => showHelp = true },
-    { "t|integration-e2e-test", "performs integration/end-to-end tests on processing library", arg => doTesting = true },
     { "i|in=", "as opposed to webcam, reads from custom image input (BMP, JPG, PNG, etc.)", arg => input = arg },
     { "g|grey", "output greyscale image", arg => outputGreyscale = true },
     { "histogram", "output greyscale histogram", arg => outputGreyscaleHistogram = true },
@@ -69,16 +67,6 @@ try
 if (showHelp)
 {
     Helpers.PrintHelp(options);
-    return;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//
-// Argument Processing : -(-i)ntegration-e2e-test
-//
-if (doTesting)
-{
-    Testing.Run();
     return;
 }
 
