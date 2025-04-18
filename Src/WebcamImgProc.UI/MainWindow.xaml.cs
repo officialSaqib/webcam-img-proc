@@ -55,6 +55,7 @@ namespace WebcamImgProc.UI
             if (this.PauseFrameCheckBox.IsChecked == true)
                 return;
 
+            // Grabbing frame and applying filter based on selected filter
             ImageFrame fr = webcam.GrabFrame();
             switch (this.FilterTypeComboBox.SelectedIndex)
             {
