@@ -1,7 +1,6 @@
 ﻿using Emgu.CV;
 using Mono.Options;
 using WebcamImgProc.CLI;
-using WebcamImgProc.CLI.Testing;
 using WebcamImgProc.ImgProc.Capture;
 using WebcamImgProc.ImgProc.Frame;
 
