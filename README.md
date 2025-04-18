@@ -98,6 +98,10 @@ Yes, there are features like this:
 * UI that used MVVM pattern.
 * Better-designed UI
 
+### How would you have tested the image capture/processing functionalities?
+
+I would create custom sample images that follow a pattern of input we generally expect to see (i.e. a person in front of a white background). Then manually verify the correctness of these images, and integrate them into a test that simply feeds these images back to the tool and checks that they match the manually-verified results. It may not be as simple as checking each byte of the result is _exactly_ the same, it might involve some margin of error.
+
 ## License
 
 No license (not including dependency licenses), use as you see fit.
