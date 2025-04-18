@@ -90,6 +90,7 @@ namespace WebcamImgProc.UI
             this.ThresholdLowerSlider.IsEnabled = false;
             this.ThresholdUpperSlider.IsEnabled = false;
 
+            // Depending on what filter is chosen, enable certain slidebars
             switch (this.FilterTypeComboBox.SelectedIndex)
             {
                 case 2:
